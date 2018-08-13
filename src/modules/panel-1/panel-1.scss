@@ -1,0 +1,34 @@
+@import "../../core/styles/_variables";
+@import "../../core/styles/_mixins";
+
+
+
+.panel-1-module {
+    background: #1DA1F2;
+    width: 100%;
+    height: 275px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .header {
+      z-index: 1;
+      @media (max-width: 680px) {
+        margin: 0 auto;
+      }
+      h1 {
+        margin-left: 73px;
+        max-width: 522px;
+        @media (max-width: 680px) {
+          margin-left: 0;
+        }
+      }
+    }  
+    img {
+      height: 280px;
+      margin-left: -600px;
+      @media (max-width: 680px) {
+        display: none;
+      }
+    }
+}
+

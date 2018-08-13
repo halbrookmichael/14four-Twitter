@@ -1,0 +1,39 @@
+include mixins
+doctype html
+//[if lt IE 8 ]>  <html class="no-js ie lt-ie10 lt-ie9 lt-ie8" lang="en"> <![endif]
+//[if IE 8]>  <html class="no-js ie lt-ie10 lt-ie9" lang="en"> <![endif]
+//[if IE 9]>  <html class="no-js ie lt-ie10" lang="en"> <![endif]
+//[if (gt IE 9)|!(IE)]><!
+html(class="no-js", lang="en")
+  //<![endif]
+
+  head
+
+    block title
+    include partials/meta.html
+    include partials/fonts.html
+
+    //- include inline Modernizr in the head
+    //- should be a custom minified Modernizr build with only the required tests
+    include partials/_modernizr.js.pug
+
+    //- inline rely.js library
+    include partials/_rely.js.pug
+    
+    //- include polyfills for IE 8 and below
+    //[if lt IE 9 ]> <script src="assets/bundle/entry/polyfills.js"></script> <![endif]
+    
+    //- Include page dependencies
+    if locals.isRelease()
+      link(rel="stylesheet", href="assets/bundle/entry/common.css")
+    link(rel="stylesheet", href="assets/bundle/entry/" + locals.page + ".css")
+
+    include partials/analytics.html
+
+  body(class="page-" + locals.page)
+
+    block content
+
+    if locals.isRelease()
+      script(src="assets/bundle/entry/common.js")
+    script(src="assets/bundle/entry/" + locals.page + ".js")

@@ -1,0 +1,91 @@
+@import "../../core/styles/_variables";
+@import "../../core/styles/_mixins";
+
+.style-guide {
+
+}
+
+body {
+  background-size: 100% auto;
+}
+
+.space {
+  margin-bottom: 50px;
+}
+
+.container-demo {
+  background: $gray90;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.demo {
+  margin: 20px 0;
+}
+
+.grid-demo div, .grid-demo h4 {
+  min-height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+.grid-demo .row div[class*="span"] {
+  margin-bottom: 20px;
+  background: $brandDark;
+  color: $white;
+}
+
+.grid-demo .row div[class*="span"] div[class*="span"] {
+  background: rgba(0,0,0,0.2);
+  margin-top: 20px;
+}
+
+.swatch {
+  position: relative;
+  padding-top: 100%;
+}
+
+#colors .span2 {
+  margin-bottom: 20px;
+}
+
+.cls {
+  margin-bottom: 5px;
+  background: $gray90;
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.info {
+  margin-top: 5px;
+  color: $brandLight;
+}
+
+a[class*="icon-"] {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+#buttons .span4 {
+  margin-bottom: 20px;
+}
+
+#icons .span2, .light-icons .span2, #icons h4, .light-icons h4 {
+  text-align: center;
+}
+
+#icons .info {
+  margin-bottom: 30px;
+}
+
+.light-icons {
+  padding: 20px 0;
+}

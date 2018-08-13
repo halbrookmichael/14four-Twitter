@@ -1,0 +1,22 @@
+@import "../../core/styles/_variables";
+@import "../../core/styles/_mixins";
+
+.panel-7-module {
+  height: 176px;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 680px) {
+    text-align: left;
+  }
+  .cite {
+    color: $black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px;
+    p {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+}

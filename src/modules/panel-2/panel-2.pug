@@ -1,0 +1,9 @@
+include /core/html/mixins
+
+.panel-2-module(data-module="panel-2")
+  img(src="../../assets/img/img_panel_2.png", alt="phone taking picture")
+  .advertising
+    .head
+      h2!= data.header
+    p!= data.content
+      span!= data.content2

@@ -1,0 +1,9 @@
+node_modules/*
+# uncomment the line below if you need to commit @14four private packages
+#!node_modules/@14four/
+bower_components/*
+build
+.DS_STORE
+.sass-cache
+*.log
+.tmp

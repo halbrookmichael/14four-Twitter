@@ -1,0 +1,115 @@
+@import "../../core/styles/_variables";
+@import "../../core/styles/_mixins";
+
+.panel-5-module {
+  height: 402px;
+  @media (max-width: 960px) {
+    height: auto;
+  }
+  .guide-desc {
+    margin: 0 auto;
+    @media (max-width: 960px) {
+      flex-direction: column;
+    }
+    .description:nth-of-type(2) {
+      background: #eee;
+    }
+    .description {
+      text-align: center;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 48px;
+      max-width: 341.333px;
+      .triangle-1,
+      .triangle-2,
+      .triangle-3 {
+        width: 0; 
+        height: 0; 
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 20px solid #FCAA35;
+        position: relative;
+      }
+      .triangle-1 {
+        top: -27px;
+        margin-bottom: -35px;
+        @media (max-width: 960px) {
+          top: -50px;
+        }
+      }
+      .icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        left: 70px;
+        bottom: -20px;
+        .chart-back {
+          position: relative;
+          left: -98px;
+          top: -14px;
+        }
+        .chart-focus {
+          position: relative;
+          left: -140px;
+          top: -20px;
+        }
+      }
+      .triangle-2 {
+        top: -12px;
+        @media (max-width: 960px) {
+          display: none;
+        }
+      }
+      .icon-2 {
+        position: relative;
+        left: -15px;
+        .small-head {
+          position: relative;
+          left: 32px;
+        }
+      }
+      .triangle-3 {
+        top: -13px;
+        @media (max-width: 960px) {
+          display: none;
+        }
+      }
+      .icon-3 {
+        position: relative;
+        left: -16px;
+        margin-top: 20px;
+        .media {
+          position: relative;
+          top: -32px;
+        }
+        .hand {
+          position: relative;
+          left: 68px;
+          z-index: 1;
+        }
+      }
+      @media (max-width: 960px) {
+        max-width: 100%;
+        padding: 50px 25px;
+      }
+      p {
+        color: #794FBC;
+        font-size: 24px;
+        line-height: 28.8px;
+        font-weight: bold;
+        @media (max-width: 960px) {
+          max-width: 35%;
+          margin-bottom: 60px;
+          br {
+            display: none;
+          }
+        }
+        @media (max-width: 780px) {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+mixin demo
+  .grid
+    .row
+      .span12.demo
+        block
+
+.container.space#icons
+  +demo
+    h2 Icons
+    hr
+  .grid
+    .row.mobile-third
+      each item in codepoints
+        .span2
+          a(href="#" class="icon-#{item.name}")
+          p.info .icon-#{item.name}

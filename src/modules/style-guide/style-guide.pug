@@ -1,0 +1,233 @@
+include /core/html/mixins.pug
+
+mixin demo
+  .grid
+    .row
+      .span12.demo
+        block
+
+mixin headline(tClass, desktopFontInfo, mobileFontInfo)
+  +demo
+    h4.uncap.cls .#{tClass}
+    p(class=tClass) Donec rhoncus turpis mi, id elementum.
+    p.info.visible-desktop= desktopFontInfo
+    p.info.visible-phone= mobileFontInfo
+
+mixin bodyCopy(pClass, desktopFontInfo, mobileFontInfo)
+  +demo
+    h4.uncap.cls .#{pClass}
+    p(class=pClass) Donec rhoncus turpis mi, id elementum nunc dapibus eu. Suspendisse varius tempor elit vitae vehicula. Praesent volutpat ultrices quam. Vivamus cursus enim dolor, non venenatis ligula sollicitudin in. Donec rhoncus turpis mi, id elementum nunc dapibus eu. Suspendisse varius tempor elit vitae vehicula. Praesent volutpat ultrices quam. Vivamus cursus enim dolor, non venenatis ligula sollicitudin in.
+    p.info.visible-desktop= desktopFontInfo
+    p.info.visible-phone= mobileFontInfo
+
+mixin swatch(color, title, hex)
+  .span2
+    .swatch(class="bg-" + color)
+    .p1= title
+    h5= hex
+
+.style-guide(data-module="style-guide")
+
+  .container
+    .grid
+      .span12
+        br
+        h1 Style Guide
+        hr
+        br
+  .container
+    .grid
+      .row.mobile-half
+        .span6
+          h4
+            a(href="#headlines") Headlines
+        .span6
+          h4
+            a(href="#copy") Body Copy
+      .row.mobile-half
+        .span6
+          h4
+            a(href="#buttons") Buttons
+        .span6
+          h4
+            a(href="#icons") Icons
+      .row.mobile-half
+        .span6
+          h4
+            a(href="#grid") Grid
+      hr
+
+  .container.space#headlines
+    +demo
+      h2 Headlines
+      hr
+    div Edit these to fit the sizes for your project
+    +headline('t1', '48px Regular / 48px leading', '32px Regular / 32px leading')
+    +headline('t2', '36px Regular / 36px leading', '24px Regular / 24px leading')
+    +headline('t3', '32px Regular / 32px leading', '20px Regular / 20px leading')
+    +headline('t4', '24px Regular / 24px leading', '18px Regular / 18px leading')
+    +headline('t5', '18px Regular / 18px leading', '16px Regular / 16px leading')
+    +headline('t6', '16px Regular / 16px leading', '16px Regular / 16px leading')
+
+  .container.space#copy
+    +demo
+      h2 Body Copy
+      hr
+    +bodyCopy('p1', '16px Regular / 20px leading', '14px Regular / 17px leading')
+    +bodyCopy('p2', '15px Regular / 18px leading', '13px Regular / 16px leading')
+    +bodyCopy('p3', '14px Regular / 17px leading', '12px Regular / 15px leading')
+
+  .container.space#buttons
+    +demo
+      h2 Buttons
+      hr
+    .grid
+      .row
+        .span3.demo
+          h4.uncap.cls .btn
+          div
+            a.btn Learn More
+        .span3.demo
+          h4.uncap.cls .btn-square
+          div
+            a.btn-square 1
+        .span3.demo
+          h4.uncap.cls .btn.active
+          div
+            a.btn-square.active 2
+  
+  include /core/html/partials/icons.html
+  
+  .container.space#grid
+    +demo
+      h2 Grid
+      hr
+  .container.container-demo
+    .grid.grid-demo
+      .row
+        .span12.alt
+          h4 12 Column Grid
+      .row.mobile-third
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+      .row.mobile-half
+        .span2 2
+        .span2 2
+        .span2 2
+        .span2 2
+        .span2 2
+        .span2 2
+      .row
+        .span3 3
+        .span3 3
+        .span3 3
+        .span3 3
+      .row
+        .span4 4
+        .span4 4
+        .span4 4
+      .row
+        .span5 5
+        .span7 7
+      .row
+        .span6 6
+        .span6 6
+      .row
+        .span4 4
+        .span8 8
+      .row
+        .span3 3
+        .span9 9
+      .row
+        .span2 2
+        .span10 10
+      .row
+        .span1 1
+        .span11 11
+      .row
+        .span12 12
+      .row
+        .span12.alt
+          h4 Push
+      .row
+        .span6.push3 6
+      .row
+        .span8.push2 8
+      .row
+        .span10.push1 10
+      .row
+        .span4.push4 4
+        .span3.push1 3
+      .row
+        .span12.alt
+          h4 Nesting
+      .row
+        .span4
+          .span2 2
+          .span2 2
+        .span8
+          .span4 4
+          .span4 4
+      .row
+        .span6
+          .span2 2
+          .span4 4
+        .span3
+          .span1 1
+          .span1 1
+          .span1 1
+        .span3
+          .span2 2
+          .span1 1
+      .row
+        .span12.alt
+          h4 Squeeze
+      .row.squeeze
+        .span4 4
+        .span4 4
+        .span4 4
+  .container.full-bleed.container-demo
+    .grid.grid-demo
+      .row
+        .span12.alt
+          h4 Full Bleed Container
+      .row
+        .span4 4
+        .span4 4
+        .span4 4
+    .grid.grid-demo.padded
+      .row
+        .span12.alt
+          h4 Padded
+      .row
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+        .span1 1
+  .container.full-bleed.no-max.container-demo
+    .grid.grid-demo
+      .row
+        .span12.alt
+          h4 Full Bleed Container / No Max Width
+      .row
+        .span4 4
+        .span4 4
+        .span4 4

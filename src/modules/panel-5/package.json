@@ -1,0 +1,12 @@
+{
+  "name": "panel-5",
+  "version": "1.0.0",
+  "description": "fifth panel",
+  "author": {
+    "name": "Michael Halbrook",
+    "url": "http://www.14four.com"
+  },
+  "main": "panel-5.js",
+  "style": "panel-5.scss",
+  "markup": "panel-5.pug"
+}

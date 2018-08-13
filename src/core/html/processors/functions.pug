@@ -1,0 +1,15 @@
+//- New Line
+//- Outputes a new line in the php file
+- function nl()
+  if ( locals.isRelease )
+    - return "\n";
+  else
+    -return '';
+
+//- Tab
+//- Outputes a tab into the php file
+- function t()
+  if ( locals.isRelease )
+    - return "  ";
+  else
+    -return '';

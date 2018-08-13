@@ -1,0 +1,48 @@
+@import "../../core/styles/_variables";
+@import "../../core/styles/_mixins";
+
+.panel-2-module {
+  background: #794FBF;
+  justify-content: space-between;
+  @media (max-width: 680px) {
+    padding: 45px;
+  }
+  @media (max-width: 480px) {
+    padding: 25px;
+  }
+  img {
+    align-self: flex-start;
+    margin-right: 20px;
+    height: 452px;
+    @media (max-width: 680px) {
+      display: none;
+    }
+  }
+  .advertising {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px;
+    @media (max-width: 480px) {
+      padding: 0;
+    }
+    .head {
+      margin-bottom: 54px;
+      max-width: 532px;
+    }
+    p {
+      font-weight: 300;
+      font-size: 36px;
+      line-height: 45px;
+      max-width: 700px;
+      @media (max-width: 960px) {
+        font-size: 28px;
+        line-height: 37px;
+      }
+      @media (max-width: 780px) {
+        font-size: 22px;
+        line-height: 29px;
+      }
+    }
+  }
+}

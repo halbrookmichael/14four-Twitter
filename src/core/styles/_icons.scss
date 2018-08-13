@@ -1,0 +1,16 @@
+@import "_variables";
+@import "_mixins";
+
+@font-face {
+    font-family: "iconfont";
+    src: url('assets/fonts/iconfont.eot');
+    src: url('assets/fonts/iconfont.eot?#iefix') format('eot'),
+        url('assets/fonts/iconfont.woff') format('woff'),
+        url('assets/fonts/iconfont.ttf') format('truetype'),
+        url('assets/fonts/iconfont.svg#iconfont') format('svg');
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before, [class^="icon-"]:after, [class*=" icon-"]:after {
+    @include iconFontBaseStyles('iconfont');
+}
+

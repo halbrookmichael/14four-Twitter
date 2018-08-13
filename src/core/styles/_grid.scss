@@ -1,0 +1,5 @@
+@import "_variables";
+@import "lib/_layout";
+
+// Customize the grid by editing variables or remove it if you don't need it
+@include layout-grid("grid", $grid-num-cols, $grid-mobile-breakpoint, $grid-max-width);

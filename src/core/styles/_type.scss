@@ -1,0 +1,152 @@
+@import "_variables";
+@import "_mixins";
+
+//
+// Typography
+// --------------------------------------------------
+// Customize this to meet your project needs
+
+
+// Body text
+// -------------------------
+
+body {
+  @include fontRegular;
+  color: $defaultTextColor;
+  line-height: $baseLineHeight;
+} 
+
+p {
+  b, strong {
+    @include fontBold;
+    & em {
+      @include fontBoldItalic;
+    }
+  }
+  em {
+    @include fontItalic;
+    & b, & strong {
+      @include fontBoldItalic;
+    }
+  }
+
+}
+
+strong {
+  font-weight: bold;
+}
+
+// Links
+// -------------------------
+
+a {
+  color: $linkColor;
+  text-decoration: none;
+  transition: color $transitionFast linear;
+}
+a:hover,
+a:active,
+a:focus {
+  color: $linkColorHover;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6{
+  letter-spacing: -1px;
+  text-rendering: optimizeLegibility; // disable this if we have performance issues.
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, .t1 {
+  @include fontHeading(48px);
+  line-height: px-em(48px, 48px);
+  margin-bottom: px-em(24px, 48px);
+}
+h2, .t2 {
+  @include fontHeading(36px);
+  line-height: px-em(36px, 36px);
+  margin-bottom: px-em(18px, 36px);
+}
+h3, .t3 {
+  @include fontHeading(32px);
+  line-height: px-em(32px, 32px);
+  margin-bottom: px-em(16px, 32px);
+}
+h4, .t4 {
+  @include fontHeading(24px);
+  line-height: px-em(24px, 24px);
+  margin-bottom: px-em(12px, 24px);
+}
+h5, .t5 {
+  @include fontHeading(18px);
+  line-height: px-em(18px, 18px);
+  margin-bottom: px-em(9px, 18px);
+}
+h6, .t6 {
+  @include fontHeading(16px);
+  line-height: px-em(16px, 16px);
+  margin-bottom: px-em(8px, 16px);
+}
+
+p, .p1 {
+  @include fontRegular();
+  font-size: px-em(16px);
+  line-height: px-em(20px, 16px);
+  margin-bottom: px-em(16px, 16px);
+}
+
+.p2 {
+  @include fontRegular();
+  font-size: px-em(15px);
+  line-height: px-em(18px, 15px);
+  margin-bottom: px-em(16px, 15px);
+}
+
+.p3 {
+  @include fontRegular();
+  font-size: px-em(14px);
+  line-height: px-em(17px, 14px);
+  margin-bottom: px-em(16px, 14px);
+}
+
+@media (max-width: px-em($grid-mobile-breakpoint)) {
+  h1, .t1 {
+    @include fontHeading(32px);
+    line-height: px-em(32px, 32px);
+  }
+  h2, .t2 {
+    @include fontHeading(24px);
+    line-height: px-em(24px, 24px);
+  }
+  h3, .t3 {
+    @include fontHeading(20px);
+    line-height: px-em(20px, 20px);
+  }
+  h4, .t4 {
+    @include fontHeading(18px);
+    line-height: px-em(18px, 18px);
+  }
+  h5, .t5 {
+    @include fontHeading(16px);
+    line-height: px-em(16px, 16px);
+  }
+  h6, .t6 {
+    @include fontHeading(16px);
+    line-height: px-em(16px, 16px);
+  }
+
+  p, .p1 {
+   font-size: px-em(14px);
+   line-height: px-em(14px, 17px);
+  }
+
+  .p2 {
+    font-size: px-em(13px);
+    line-height: px-em(16px, 13px);
+  }
+
+  .p3 {
+    font-size: px-em(12px);
+    line-height: px-em(15px, 12px);
+  }
+}

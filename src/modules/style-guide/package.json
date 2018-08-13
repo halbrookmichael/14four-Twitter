@@ -1,0 +1,12 @@
+{
+  "name": "style-guide",
+  "version": "1.0.0",
+  "description": "Project Style Guide",
+  "author": {
+    "name": "14Four",
+    "url": "http://www.14four.com"
+  },
+  "main": "style-guide.js",
+  "style": "style-guide.scss",
+  "markup": "style-guide.pug"
+}

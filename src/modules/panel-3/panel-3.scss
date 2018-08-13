@@ -1,0 +1,64 @@
+@import "../../core/styles/_variables";
+@import "../../core/styles/_mixins";
+
+.panel-3-module {
+  background: #26BA66;
+  .panel-3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0 auto;
+    padding: 0 40px;
+    span {
+      font-weight: 300;
+    }
+    .download-guide {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      .download-button {
+        background: $white;
+        padding: 8.5px 0;
+        &:hover {
+          border: .25px solid #F7B000;
+        }
+        &:active {
+          background: $white;
+        }
+        a {
+          font-size: 28px;
+          font-weight: bold;
+          line-height: 33.6px;
+          color: $black;
+          cursor: pointer;
+          padding: 8.5px 27px;
+          &:hover {
+            color: #1DA0F1;
+          }
+        }
+      }
+    }
+    h1 {
+      max-width: 661px;
+      @media (max-width: 780px) {
+        max-width: 70%;
+        text-align: center;
+      }
+      @media (max-width: 680px) {
+        max-width: 100%;
+      }
+    }
+    img {
+      max-width: 70%;
+      margin: 30px 0;
+      @media (max-width: 780px) {
+        width: 100%;
+      }
+    }
+    @media (max-width: 780px) {
+      flex-direction: column;
+      padding: 25px 0;
+    }
+  }
+}

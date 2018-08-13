@@ -1,0 +1,369 @@
+script.
+  var relyjs,define,require;
+  (function(e){var q=function(){};q.prototype=function(h){var n={},r={},k={},l=[],p=[],t=function(a){return"[object Function]"===Object.prototype.toString.call(a)},v=function(a,c,b){void 0===b&&(b=0);if("indexOf"in Array.prototype)return a.indexOf(c,b);0>b&&(b+=a.length);0>b&&(b=0);for(var d=a.length;b<d;b++)if(b in a&&a[b]===c)return b;return-1},w=function(a,c){if(a&&0<a.length&&"."===a[0]){var b=a.split("/"),d=c.split("/"),f=c.lastIndexOf("/")===c.length-1,f=d.length-(f?1:2),m=[],e="",g;for(g=0;g<
+  b.length;g++)".."===b[g]?f--:"."!==b[g]&&m.push(b[g]);if(0>f)throw Error("Invalid Relative Path: "+a+" from "+c);for(g=0;g<=f;g++)e+=d[g]+"/";return e+=m.join("/")}return a},u=function(a,c){var b=!1,d=document.createElement("script");d.src=a;d.onload=d.onreadystatechange=function(){if(d.readyState&&"complete"!==d.readyState&&"loaded"!==d.readyState||b)return!1;d.onload=d.onreadystatechange=null;b=!0;c&&c()};void 0!==document.body&&null!==document.body?document.body.appendChild(d):document.head.appendChild(d)};
+  return{constructor:q,configure:function(a){for(var c in a.externals)k[c]=a.externals[c]},autoResolve:function(a){p=a},map:function(a,c){n[a]=c},require:function(a){"undefined"!==typeof n[a]&&(a=n[a]);a=w(a,l[l.length-1]);if(0<=v(l,a))throw Error("Circular Dependency: "+l.join(" -> ")+" -> "+a);if("undefined"===typeof k[a]){var c=r[a],b={},d={exports:b};if("undefined"===typeof c||!t(c)){var f=!0;if(0<l.length)for(var m=0;m<p.length;m++)if(c=r[a+"."+p[m]],"undefined"!==typeof c&&t(c)){a+="."+p[m];f=
+  !1;break}if(f)throw Error("Undefined Dependency: "+a);}l.push(a);var h=!1,g;(function(){var f=define;define=function(a,b){g=b;h=!0};k[a]=c(e.require,b,d);define=f})();h?(f=g(e.require,b,d),k[a]=f):void 0===k[a]&&(k[a]=d.exports?d.exports:b);l.pop()}return k[a]},define:function(a,c){r[a]=c},load:function(a,c){if("[object Array]"===Object.prototype.toString.call(a))for(var b=a.length,d=setTimeout(function(){if(0<b)throw Error("RelyJS Timeout: "+a);},15E3),f=function(){b--;1>b&&(clearTimeout(d),c&&c())},
+  e=0;e<a.length;e++)u(a[e],f);else u(a,c)}}}();e.relyjs||(e.relyjs=new q,e.require=function(h){return e.relyjs.require(h)},e.define=function(h,n){e.relyjs.define(h,n)})})(this);
+//- relyjs unminified source below. Comment out the above script and uncomment
+//- the below script for relyjs debugging
+//- script.
+  // Global variables defined to provide dynamic script loading as well as
+  // module declaration and use via dependency requirements.
+  //
+  var relyjs, define, require;
+
+  (function(global) {
+
+    var RelyJS = function() {
+
+      var self = this;
+
+    };
+
+    RelyJS.prototype = (function(config) {
+
+      var
+
+      //
+      // Private Variables
+      //
+
+      _map = {},
+      _definitions = {},
+      _instances = {},
+      _instantiating = [],
+      _waitSeconds = 15,
+      _autoExtensions = [],
+
+      //
+      // Private Functions
+      //
+
+      // Returns true if the specified parameters is a function or false otherwise.
+      //
+      _isFunction = function(obj) {
+        return Object.prototype.toString.call(obj) === '[object Function]';
+      },
+
+      // Returns true if the specified parameter is an array or false otherwise.
+      //
+      _isArray = function(obj) {
+        return Object.prototype.toString.call(obj) === '[object Array]';
+      },
+      
+      // Array indexOf method patched for older browsers.
+      //
+      _indexOf = function(arr, find, i) {
+        if(i === undefined) {
+          i = 0;
+        }
+        if('indexOf' in Array.prototype) {
+          return arr.indexOf(find, i);
+        }
+        if(i < 0) {
+          i += arr.length;
+        }
+        if( i < 0) {
+          i = 0;
+        }
+        for (var n = arr.length; i < n; i++) {
+          if (i in arr && arr[i] === find) {
+            return i;
+          }
+        }
+        return -1;
+      },
+
+      // Returns path with ./ and ../ resolved relative to the provided 
+      // relativeTo path.
+      //
+      _resolveRelative = function(path, relativeTo) {
+        if(path && path.length > 0 && path[0] === '.') { // a relative path
+          var pathPieces = path.split('/'),
+              relativePieces = relativeTo.split('/'),
+              // is a folder path if relativeTo ends with a /
+              isFolderPath = relativeTo.lastIndexOf('/') === relativeTo.length - 1,
+              // index pointing at current folder in relativeTo
+              curPathIndex = relativePieces.length - (isFolderPath ? 1 : 2),
+              pathInclude = [],
+              resolved = '',
+              i;
+          for(i = 0; i < pathPieces.length; i++) {
+            if(pathPieces[i] === '..') {
+              curPathIndex--;
+            }
+            else if(pathPieces[i] !== '.') {
+              pathInclude.push(pathPieces[i]);
+            }
+          }
+          if(curPathIndex < 0) {
+            throw new Error('Invalid Relative Path: ' + path + ' from ' + relativeTo);
+          }
+          for(i = 0; i <= curPathIndex; i++) {
+            resolved += relativePieces[i] + '/';
+          }
+          resolved += pathInclude.join('/');
+          return resolved;
+        }
+        else { // not a relative path
+          return path;
+        }
+      },
+
+      // Loads a JavaScript file and calls the specified callback once it has been loaded.
+      //
+      _loadScript = function(src, callback) {
+        var ready = false;
+        var scriptElem = document.createElement('script');
+        scriptElem.src = src;
+        scriptElem.onload = scriptElem.onreadystatechange = function() {
+          if( (scriptElem.readyState && scriptElem.readyState !== 'complete' && scriptElem.readyState !== 'loaded') || ready) {
+            return false;
+          }
+          scriptElem.onload = scriptElem.onreadystatechange = null;
+          ready = true;
+          if( callback ) {
+            callback();
+          }
+        };
+        // append to the body if the body exists
+        if(document.body !== undefined && document.body !== null) {
+          document.body.appendChild(scriptElem);
+        }
+        // otherwise append to the head
+        else {
+          document.head.appendChild(scriptElem);
+        }
+      };
+
+      //
+      // Public Interface
+      //
+
+      return {
+
+        constructor: RelyJS,
+
+        // Configures RelyJS. Configuration options include:
+        //
+        // externals:
+        //    An object containing dependency name to object mappings. Each
+        //    property of the object makes the provided object available as
+        //    a dependency via a call to require. For example:
+        //
+        //      jquery: $
+        //
+        //    will make the $ global available as a dependency via a call
+        //    to require('jquery'). This allows non-modular third-party libraries
+        //    that are not declared using define to still be required as
+        //    dependencies.
+        //
+        configure: function(config) {
+
+          var self = this;
+
+          for(var name in config.externals) {
+            _instances[name] = config.externals[name];
+          }
+
+        },
+
+        // Sets the list of file extensions allowed to be automatically resolved
+        // for dependency names without file extensions. If a dependency name
+        // does match an existing definition, the dependency will attempt to be
+        // resolved by trying each provided file extension in order. For example,
+        // if fileExtensions is provided as ['js','coffee'] then require('main')
+        // will attempt to be resolved by checking for the following definitions
+        // in the order listed: 'main', 'main.js', 'main.coffee'. The provided
+        // fileExtensions parameter should be an array of file extension strings
+        // without the leading dot.
+        //
+        autoResolve: function(fileExtensions) {
+          _autoExtensions = fileExtensions;
+        },
+
+        // Maps one dependency name to another. Allows a dependency to be returned
+        // using a require call with a different name than what was specified in
+        // the define call. The to parameter must be a string used in a call to
+        // define. After calling map('A', 'B'), require('A') will return the
+        // dependency defined by define('B', ...).
+        //
+        map: function(from, to) {
+
+          var self = this;
+
+          _map[from] = to;
+
+        },
+
+        // Returns an instance of the specified dependency. If the module with the
+        // specified name has not already been instantiated, it will be instantiated
+        // as a part of this call. All child dependencies will also be instantiated
+        // as appropriate. Performs checks for circular dependencies and will throw
+        // an error if a circular dependency is found or an undefined dependency is
+        // encountered.
+        //
+        require: function(dependencyName) {
+
+          var self = this;
+
+          // Allow dependency mapping provided via map to alter the dependencyName
+          if(typeof _map[dependencyName] !== 'undefined') {
+            dependencyName = _map[dependencyName];
+          }
+
+          // Resolve relative paths if they exist
+          dependencyName = _resolveRelative(dependencyName, _instantiating[_instantiating.length-1]);
+
+          // Check for circular dependencies
+          if(_indexOf(_instantiating, dependencyName) >= 0) {
+            throw new Error('Circular Dependency: ' + _instantiating.join(' -> ') + ' -> ' + dependencyName);
+          }
+
+          // Check whether or not the dependency has already been instantiated
+          if(typeof _instances[dependencyName] === 'undefined') {
+
+            var fn = _definitions[dependencyName],
+                exports = {},
+                module = { exports: exports };
+
+            // Check whether or not the dependency has been defined with a call to define
+            if(typeof fn === 'undefined' || !_isFunction(fn)) {
+              var err = true;
+              // If no definition based on dependency name try resolving using the
+              // configured auto file extensions before failing as an undefined 
+              // dependency.
+              if(_instantiating.length > 0) {
+                for(var i = 0; i < _autoExtensions.length; i++) {
+                  fn = _definitions[dependencyName + '.' + _autoExtensions[i]];
+                  if(typeof fn !== 'undefined' && _isFunction(fn)) {
+                    dependencyName += '.' + _autoExtensions[i];
+                    err = false;
+                    break;
+                  }
+                }
+              }
+              if(err) {
+                throw new Error('Undefined Dependency: ' + dependencyName);
+              }
+            }
+
+            // Instantiate the referenced dependency while maintaining an instantiation
+            // stack for detecting circular dependencies
+            _instantiating.push(dependencyName);
+
+            var foundNested = false, nestedDef;
+            (function() {
+              // override define call to detect nested dependency definitions
+              var defineOriginal = define;
+              define = function(n,d) {
+                nestedDef = d;
+                foundNested = true;
+              };
+              _instances[dependencyName] = fn(global.require, exports, module);
+              // restore global define function
+              define = defineOriginal;
+            })();
+            
+            if(foundNested) {
+              // found a nested dependency definition so return an instance of
+              // that rather than the outer instance
+              var nestedInstance = nestedDef(global.require, exports, module);
+              _instances[dependencyName] = nestedInstance;
+            }
+            // Support CommonJS exports and module.exports in an AMD wrapper
+            else if(_instances[dependencyName] === undefined) {
+              if( module.exports ) {
+                _instances[dependencyName] = module.exports;
+              }
+              else {
+                _instances[dependencyName] = exports;
+              }
+            }
+            _instantiating.pop();
+
+          }
+
+          return _instances[dependencyName];
+        },
+
+        // Defines a module that may be used with a call to require.
+        //
+        define: function(name, definition) {
+
+          var self = this;
+
+          _definitions[name] = definition;
+        },
+
+        // Loads one or more JavaScript files and calls the provided callback function
+        // once all scripts are loaded. The first parameter may be a string with the
+        // URL of a single script file to load or an array of strings containing a
+        // URL for each script to load. Scripts are not guaranteed to load in any
+        // particular order but all scripts are guaranteed to be loaded before the
+        // callback function is called.
+        //
+        load: function(sources, callback) {
+
+          var self = this;
+
+          // Load multiple scripts
+          if(_isArray(sources)) {
+
+            var remainingCount = sources.length;
+
+            // Set a wait timer to error on script loading timeout
+            var waitTimer = setTimeout(function() {
+              if(remainingCount > 0) {
+                throw new Error('RelyJS Timeout: ' + sources);
+              }
+            }, _waitSeconds * 1000);
+
+            var singleLoadCallback = function() {
+              remainingCount--;
+              if(remainingCount < 1) {
+                // all scripts have loaded
+                clearTimeout(waitTimer);
+                if(callback) {
+                  callback();
+                }
+              }
+            };
+
+            for(var i = 0; i < sources.length; i++) {
+              _loadScript(sources[i], singleLoadCallback);
+            }
+
+          }
+
+          // Load a single script
+          else {
+            _loadScript(sources, callback);
+          }
+
+        }
+      };
+
+    })();
+
+    // Export globals if they do not already exist.
+    //
+    if(!global.relyjs) {
+
+      // Create RelyJS instance
+      global.relyjs = new RelyJS();
+
+      // Proxy global require calls to execute in the context of the relyjs object.
+      global.require = function(dependencyName) {
+        return global.relyjs.require(dependencyName);
+      };
+
+      // Proxy global define calls to execute in the context of the relyjs object.
+      global.define = function(name, definition) {
+        global.relyjs.define(name, definition);
+      };
+
+    }
+
+  }(this));

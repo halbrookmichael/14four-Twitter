@@ -1,0 +1,114 @@
+@import "_variables";
+@import "_mixins";
+
+body {
+  height: 100%;
+  width: 100%;
+  color: $white;
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  @media (max-width: 680px) {
+    text-align: center;
+  }
+}
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.panel-1-module,
+.panel-2-module,
+.panel-4-module,
+.panel-5-module,
+.panel-6-module,
+.panel-7-module {
+  position: relative;
+}
+
+.panel-1-module,
+.panel-2-module,
+.panel-4-module,
+.panel-5-module,
+.panel-6-module,
+.panel-7-module,
+.description,
+.guide-desc {
+  display: flex;
+}
+
+.panel-2-module,
+.panel-3-module,
+.panel-5-module,
+.panel-6-module,
+.panel-7-module {
+  @media (max-width: 780px) {
+    height: auto !important;
+  }
+}
+
+.panel-1-module,
+.panel-2-module,
+.panel-3-module,
+.panel-3,
+.panel-4-module,
+.panel-6-module {
+  @media (max-width: 680px) {
+    padding: 0 45px;
+  }
+  @media (max-width: 480px) {
+    padding: 0 25px;
+  }
+}
+
+.icon,
+.icon-2,
+.icon-3 {
+  margin-bottom: 32px;
+}
+
+h1,
+h2,
+h3,
+h5,
+p,
+a,
+span {
+  font-family: $baseFontFamily;
+}
+
+h1 {
+  font-size: 44px;
+  font-weight: bold;
+  line-height: 52.8px;
+  @media (max-width: 960px) {
+    font-size: 34px;
+    line-height: 43.8px;
+  }
+  @media (max-width: 780px) {
+    font-size: 30px;
+    line-height: 40.8px;
+    max-width: 100%;
+  }
+}
+
+h2{
+  font-size: 36px;
+  line-height: 45px;
+  font-weight: bold;
+  @media (max-width: 960px) {
+    font-size: 30px;
+    line-height: 37px;
+  }
+  @media (max-width: 780px) {
+    font-size: 28px;
+    line-height: 34px;
+  }
+}
+
+span {
+  font-weight: bold;
+}

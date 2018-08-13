@@ -1,0 +1,177 @@
+include functions
+
+//- Functions vs Mixins
+//- Functions: are allowed to be a sub element or an attribute
+//- Mixins: allow for sub blocks to be passed in, but are required to be the main element
+
+- function phpInclude( moduleName, phpData, moduleData )
+  - if ( typeof phpData === 'undefined' ) phpData = '[]';
+  - return "include('frontend.modules." + moduleName + "." + moduleName + (moduleData == 'default' ? '' : '_'+moduleData) + "', " + phpData + ")"
+
+//- Dump PHP code onto the page
+mixin php()
+  if ( locals.isPhp )
+    | #{nl()}  <?php
+    block
+    | #{nl()}  ?>
+
+- function php(string)
+  if ( locals.isPhp )
+    - return '<?php ' + string + ' ?>'
+
+
+
+//- Echo
+//- To Echo out a variable to the page
+- function phpEcho(jadeVar, phpVar, process)
+  - if ( typeof process == 'undefined') process = true;
+  if ( locals.isPhp )
+    if ( process )
+      - return '<?= htmlspecialchars(' + phpVar + ') ?>';
+    else
+      - return '<?= ' + phpVar + ' ?>';
+  else
+    - return jadeVar;
+
+mixin phpEcho(jadeVar, phpVar, process)
+  - if ( typeof process == 'undefined') process = true;
+  if ( locals.isPhp )
+    if ( process )
+      | <?= htmlspecialchars( !{phpVar} ) ?>
+    else
+      | <?= !{phpVar} ?>
+  else
+    if ( process )
+      | !{jadeVar}
+    else
+      | #{jadeVar}
+
+
+
+
+//- Add Comment to page
+mixin phpComment(comment)
+  if ( locals.isPhp )
+    | !{nl()}  <?php /*
+    block
+    |  */ ?>
+
+
+//- If
+//-
+//- Example:
+//- +phpIf(data.items.length > 1, 'items.count() > 1')
+//-   div Greater
+//- +phpElseIf(data.items.length == 1, 'items.count() == 1')
+//-   div equal
+//- +phpElse
+//-   div Else
+//- +phpEndIf
+mixin phpIf(jadeVar, phpVar)
+  if ( locals.isPhp )
+    | !{nl()}  <?php if( !{phpVar} ) { ?>
+    block
+  else
+    - if (typeof lastif === 'undefined') lastif = []
+    - lastif.push(jadeVar)
+    if jadeVar
+      block
+
+mixin phpElseIf(jadeVar, phpVar)
+  if ( locals.isPhp )
+    | !{nl()}  <?php } else if( !{phpVar} ) { ?>
+    block
+  else
+    - if (lastif[lastif.length-1]) {
+      //- nothing here
+    - } else if(jadeVar) {
+      - lastif[lastif.length-1] = jadeVar
+      block
+    - }
+
+mixin phpElse
+  if ( locals.isPhp )
+    | !{nl()}  <?php } else { ?>
+    block
+  else
+    - if (lastif[lastif.length-1]) {
+      //- nothing here
+    - } else {
+      - lastif[lastif.length-1] = jadeVar
+      block
+    - }
+
+mixin phpEndIf
+  if ( locals.isPhp )
+    | !{nl()}  <?php } ?>
+  else
+    - lastif.pop()
+
+
+//- EACH
+//-
+//- Example:
+//- +phpEach({"each": data.items, "as": 'pink', index: 'index'}, 'item in items')
+//-   li!= echo(pink.name, 'item')
+mixin phpEach(jadeVar, phpVar)
+  - eval('if (typeof '+jadeVar.as+' === "undefined") '+jadeVar.as+' = {}')
+  if ( jadeVar.index )
+    - eval('if (typeof '+jadeVar.index+' === "undefined") '+jadeVar.index+' = {}')
+  if ( locals.isPhp )
+    | #{nl()}  <?php foreach( #{phpVar} ) { ?>
+    block
+    | #{nl()}  <?php } ?>
+  else
+    each phpEachJadeItem, phpEachJadeIndex in jadeVar.each
+      - eval(jadeVar.as + ' = phpEachJadeItem;')
+      if (jadeVar.index)
+        - eval(jadeVar.index + ' = phpEachJadeIndex;')
+      block
+
+
+
+//- FOR
+//- To Do
+
+
+
+
+//- Switch
+//-
+//- Example:
+//- +phpSwitch(data.item, 'foo')
+//-   +phpCase('bar', 'bar')
+//-     h1!= data.item
+//-   +phpCase('foobar', 'foobar')
+//-     h2!= data.item
+//-   +phpDefault
+//-     p!= data.item
+
+mixin phpSwitch(jadeVar, phpVar)
+  if ( locals.isPhp )
+    | #{nl()}  <?php switch( !{phpVar} ) { ?>
+    block
+    | #{nl()}  <?php } ?>
+  else
+    - if (typeof lastswitch === 'undefined') lastswitch = []
+    - lastswitch.push({value: jadeVar, found: false})
+    block
+    - lastswitch.pop()
+
+mixin phpCase(jadeVar, phpVar)
+  if ( locals.isPhp )
+    | #{nl()}  <?php case #{phpVar}: ?>
+    block
+    | #{nl()}  <?php break; ?>
+  else
+    if ( !lastswitch[lastswitch.length-1].found && lastswitch[lastswitch.length-1].value === jadeVar )
+      - lastswitch[lastswitch.length-1].found = true;
+      block
+
+mixin phpDefault(jadeVar, phpVar)
+  if ( locals.isPhp )
+    | #{nl()}  <?php default: ?>
+    block
+  else
+    if ( !lastswitch[lastswitch.length-1].found )
+      block

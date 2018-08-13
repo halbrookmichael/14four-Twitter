@@ -1,0 +1,141 @@
+
+
+//- Yields a nested markup block as a string by hijacking the pug buffer
+- function yieldBlock(b) {
+-   if(b !== undefined) {
+-     // backup the current page buffer
+-     var backupBuffer = buf, yieldBuffer;
+-     // temporarily hijack the global buffer `buf` with our own array
+-     buf = [];
+-     // execute the block function which causes `push` calls to the array
+-     b.call(this);
+-     // keep a copy of the resulting buffer
+-     yieldBuffer = buf;
+-     // restore the global page buffer `buf`
+-     buf = backupBuffer;
+-     // return the buffer contents as a string
+-     return yieldBuffer.join('');
+-   }
+-   // no block so return empty string
+-   return '';
+- }
+
+//- Renders the jade module with the specified name using the provided data and
+//- configuration. The moduleData may either be a JavaScript object with
+//- properties/values or a string with the path to the json file. In the case of
+//- a string, if no extension is provided it is assumed to just be the filename
+//- of a json file in the module's data folder and is resolved as such.
+mixin module( moduleName, moduleData, moduleConfig, phpData )
+
+  //- create context variable for passing to jadePartial with locals and data
+  //- prevent locals from nesting with nested modules
+  if ( locals.locals !== undefined )
+    - context = { "locals": locals.locals }
+  else
+    - context = { "locals": locals }
+
+
+  if ( locals.isPhp )
+    | !{ phpInclude(moduleName, phpData, moduleData) }
+  else
+    //- each page has a unique key for tracking dependencies
+    - page = context.locals.page
+    //- maintain a list of page dependencies on locals
+    if ( !context.locals.dependencies )
+      - context.locals.dependencies = {}
+    //- each page tracks module and data dependencies
+    if ( !context.locals.dependencies[page] )
+      - context.locals.dependencies[page] = { modules: [], data: [], forced: [], components: [] }
+    - pageDependencies = context.locals.dependencies[page]
+    //- record module dependencies
+    if ( pageDependencies.modules.indexOf( moduleName ) === -1 )
+      - pageDependencies.modules.push( moduleName )
+
+    if ( moduleName && moduleData )
+      if ( typeof(moduleData) === 'string' )
+        if ( !moduleData.match( /.json/g ) )
+          //- if json extension not specified automatically expand to module data path
+          - moduleData = './modules/' + moduleName + '/data/' + moduleData + '.json'
+        //- track data paths so data changes can trigger rebuilding
+        if ( pageDependencies.data.indexOf( moduleData ) === -1 )
+          - pageDependencies.data.push( moduleData )
+
+      //- read the data. if already an object it is simply returned
+      - context['data'] = context.locals.json( moduleData )
+      //- yield any nested markup block as a string and make available to the module as `data.yield`
+      - context['data'].yield = yieldBlock(block)
+      //- render the module with the context
+      <!-- #{moduleName} -->!{ context.locals.pugPartial('./modules/' + moduleName + '/' + moduleName + '.pug', context, moduleConfig) }
+
+//- Renders the pug component with the specified name using the provided data
+//- and configuration. The componentData may either be a JavaScript object with
+//- properties/values or a string with the path to the json file. In the case of
+//- a string, if no extension is provided it is assumed to just be the filename
+//- of a json file in the global component data folder and is resolved as such.
+//- Unlike modules, which are located in the project modules folder, components
+//- are located in a reusable library external to the project.
+mixin component( componentName, componentData, componentConfig )
+
+  //- create context variable for passing to pugPartial with locals and data
+  //- prevent locals from nesting with nested components
+  if ( locals.locals !== undefined )
+    - context = { "locals": locals.locals }
+  else
+    - context = { "locals": locals }
+
+  //- each page has a unique key for tracking dependencies
+  - page = context.locals.page
+  //- maintain a list of page dependencies on locals
+  if ( !context.locals.dependencies )
+    - context.locals.dependencies = {}
+  //- each page tracks component and data dependencies
+  if ( !context.locals.dependencies[page] )
+    - context.locals.dependencies[page] = { modules: [], data: [], forced: [], components: [] }
+  - pageDependencies = context.locals.dependencies[page]
+  - componentFullName = 'component-' + componentName
+  //- record component dependencies
+  if ( pageDependencies.components.indexOf( componentFullName ) === -1 )
+    - pageDependencies.components.push( componentFullName )
+
+  if ( componentName && componentData )
+    if ( typeof(componentData) === 'string' )
+      if ( !componentData.match( /.json/g ) )
+        //- if json extension not specified automatically expand to core component data path
+        - componentData = './core/data/' + componentData + '.json'
+      //- track data paths so data changes can trigger rebuilding
+      if ( pageDependencies.data.indexOf( componentData ) === -1 )
+        - pageDependencies.data.push( componentData )
+
+    //- read the data. if already an object it is simply returned
+    - context['data'] = context.locals.json( componentData )
+    //- yield any nested markup block as a string and make available to the component as `data.yield`
+    - context['data'].yield = yieldBlock(block)
+    //- render the component with the context
+    <!-- #{componentFullName} -->!{ context.locals.pugPartial('../node_modules/@14four/armory-components/lib/' + componentFullName + '/' + componentName + '.pug', context, componentConfig) }
+
+//- Should be called at the end of a page to export the page's module dependencies.
+//- An optional array of dependencies may be included to force additional non-module
+//- dependencies to be included for a page.
+mixin end(forced)
+  //- create context variable
+  if ( locals.locals !== undefined )
+    - context = { "locals": locals.locals }
+  else
+    - context = { "locals": locals }
+  //- each page has a unique key for tracking dependencies
+  - page = context.locals.page
+  //- maintain a list of page dependencies on locals
+  if ( !context.locals.dependencies )
+    - context.locals.dependencies = {}
+  //- each page tracks module, data, and forced dependencies
+  if ( !context.locals.dependencies[page] )
+    - context.locals.dependencies[page] = { modules: [], data: [], forced: [], components: [] }
+  - if ( forced !== undefined )
+    - context.locals.dependencies[page].forced = forced
+  //- export the dependencies to the PageBuilder
+  - context.locals.export()
+
+mixin util-center-vertical()
+  .util-center-vertical
+    .util-center-vertical__inner
+      block

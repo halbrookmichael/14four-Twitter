@@ -1,0 +1,34 @@
+@import "_variables";
+@import "_mixins";
+
+// ------------------------------------
+// Visibility utilities
+// ------------------------------------
+
+.out {
+  display: none;
+}
+
+.visible-desktop   { display: inherit !important; }
+.visible-phone     { display: none !important; }
+.hidden-desktop    { display: none !important; }
+.hidden-phone      { }
+
+@mixin visibility-tablet {
+  .visible-desktop   { display: none !important ; }
+  .visible-phone     { display: none !important; }
+  .hidden-desktop    { display: inherit !important; }
+  .hidden-phone      { display: inherit !important; }
+}
+
+@mixin visibility-phone {
+  .hidden-desktop    { display: inherit !important; }
+  .hidden-phone      { display: none !important; }
+  .visible-desktop   { display: none !important ; }
+  .visible-phone     { display: inherit !important; }
+}
+
+// by default everything below $grid-mobile-breakpoint is a phone view
+@media (max-width: px-em($grid-mobile-breakpoint)) {
+  @include visibility-phone;
+}

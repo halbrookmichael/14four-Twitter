@@ -1,0 +1,17 @@
+@import "../../core/styles/_variables";
+@import "../../core/styles/_mixins";
+
+.panel-4-module {
+  background: #FCAA35;
+  height: 309px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 97px;
+  @media (max-width: 780px) {
+    padding: 0 25px;
+  }
+  h1 {
+    max-width: 830px;
+  }
+}
