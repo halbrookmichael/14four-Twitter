@@ -49,11 +49,16 @@
           position: relative;
           left: -98px;
           top: -14px;
+          z-index: 0;
+        }
+        .chart-bottom {
+          z-index: 1;
         }
         .chart-focus {
           position: relative;
           left: -140px;
           top: -20px;
+          z-index: 1;
         }
       }
       .triangle-2 {

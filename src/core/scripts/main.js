@@ -76,14 +76,14 @@ define('main', function(require) {
       // PANEL 2 ----------
 
       // setup a GSAP Tween, look at TweenMax docs for syntax
-      var tween2 = TweenMax.fromTo('.advertising', 1, {xPercent: 850, autoAlpha: 0}, {xPercent: 0, autoAlpha: 1});
+      var tween2 = TweenMax.fromTo('.advertising', 1, {xPercent: 200, autoAlpha: 0}, {xPercent: 0, autoAlpha: 1});
 
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
         triggerElement: '.panel-2-module',
-        duration: 0,
-        offset: 1
+        duration: 400,
+        offset: 50
       })
 
       // add your tween to your scene
@@ -207,7 +207,7 @@ define('main', function(require) {
       var scene = new ScrollMagic.Scene({
         triggerElement: '.panel-5-module',
         duration: 400,
-        offset: 150
+        offset: 75
       })
 
       // add your tween to your scene
@@ -223,7 +223,7 @@ define('main', function(require) {
       var scene = new ScrollMagic.Scene({
         triggerElement: '.panel-5-module',
         duration: 400,
-        offset: 200
+        offset: 100
       })
 
       // add your tween to your scene
@@ -241,7 +241,7 @@ define('main', function(require) {
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
-        triggerElement: '.trigger-download',
+        triggerElement: '.panel-5-module',
         duration: 150,
         offset: 0
       })
@@ -257,9 +257,9 @@ define('main', function(require) {
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
-        triggerElement: '.trigger-download',
+        triggerElement: '.panel-5-module',
         duration: 150,
-        offset: 0
+        offset: 200
       })
 
       // add your tween to your scene
@@ -272,14 +272,14 @@ define('main', function(require) {
       // ICONS ----------
 
       // setup a GSAP Tween, look at TweenMax docs for syntax
-      var tween12 = TweenMax.fromTo('.hand', 1, {scale: 1}, {scale: .4});
+      var tween12 = TweenMax.fromTo('.hand', 1, {scale: 1}, {scale: .6});
 
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
-        triggerElement: '.icon-3',
+        triggerElement: '.icon',
         duration: 200,
-        offset: 250
+        offset: 0
       })
 
       // add your tween to your scene
@@ -288,13 +288,13 @@ define('main', function(require) {
       .addTo(controller);
 
       // setup a GSAP Tween, look at TweenMax docs for syntax
-      var tween13 = TweenMax.fromTo('.hand', 1, {scale: .4}, {scale: 1});
+      var tween13 = TweenMax.fromTo('.hand', 1, {scale: .6}, {scale: 1});
 
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
         triggerElement: '.icon-3',
-        duration: 150,
+        duration: 100,
         offset: 0
       })
 
@@ -304,14 +304,14 @@ define('main', function(require) {
       .addTo(controller);
 
       // setup a GSAP Tween, look at TweenMax docs for syntax
-      var tween14 = TweenMax.fromTo('.media', 2, {scale: 1}, {scale: 1.3});
+      var tween14 = TweenMax.fromTo('.media', 1, {rotation: 0}, {rotation: 360});
 
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
-        triggerElement: '.icon-3',
+        triggerElement: '.icon',
         duration: 300,
-        offset: -100
+        offset: -250
       })
 
       // add your tween to your scene
@@ -325,9 +325,9 @@ define('main', function(require) {
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
-        triggerElement: '.icon-2',
+        triggerElement: '.icon',
         duration: 300,
-        offset: -100
+        offset: -250
       })
 
       // add your tween to your scene
@@ -341,9 +341,9 @@ define('main', function(require) {
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
-        triggerElement: '.icon-2',
+        triggerElement: '.icon',
         duration: 300,
-        offset: -100
+        offset: -250
       })
 
       // add your tween to your scene
@@ -352,13 +352,13 @@ define('main', function(require) {
       .addTo(controller);
 
       // setup a GSAP Tween, look at TweenMax docs for syntax
-      var tween17 = TweenMax.fromTo('.chart-back', 2, {yPercent: 20}, {yPercent: 0});
+      var tween17 = TweenMax.fromTo('.chart-back', 1, {yPercent: 20}, {yPercent: 0});
 
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
         triggerElement: '.icon',
-        duration: 300,
+        duration: 200,
         offset: -100
       })
 
@@ -368,13 +368,13 @@ define('main', function(require) {
       .addTo(controller);
 
       // setup a GSAP Tween, look at TweenMax docs for syntax
-      var tween18 = TweenMax.fromTo('.chart-focus', 2, {scale: 1.6}, {scale: 1});
+      var tween18 = TweenMax.fromTo('.chart-focus', 1, {yPercent: -25, scale: 1.4}, {yPercent: 0, scale: 1});
 
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
         triggerElement: '.icon',
-        duration: 300,
+        duration: 200,
         offset: -100
       })
 
