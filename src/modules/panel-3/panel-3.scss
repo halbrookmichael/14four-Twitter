@@ -10,6 +10,9 @@
   .launch {
     display: flex;
     align-items: center;
+    span {
+      font-weight: 300;
+    }
     @media (max-width: 768px) {
       flex-direction: column;
     }

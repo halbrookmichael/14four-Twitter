@@ -277,7 +277,7 @@ define('main', function(require) {
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
-        triggerElement: '.icon-2',
+        triggerElement: '.right',
         duration: 200,
         offset: -100
       })
@@ -293,7 +293,7 @@ define('main', function(require) {
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
-        triggerElement: '.icon-2',
+        triggerElement: '.right',
         duration: 100,
         offset: 250
       })
@@ -309,7 +309,7 @@ define('main', function(require) {
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
-        triggerElement: '.icon-3',
+        triggerElement: '.right',
         duration: 300,
         offset: 0
       })
