@@ -82,8 +82,8 @@ define('main', function(require) {
       // other scene parameters
       var scene = new ScrollMagic.Scene({
         triggerElement: '.panel-2-module',
-        duration: 400,
-        offset: 50
+        duration: 250,
+        offset: 0
       })
 
       // add your tween to your scene
