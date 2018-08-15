@@ -150,8 +150,8 @@ define('main', function(require) {
       // other scene parameters
       var scene = new ScrollMagic.Scene({
         triggerElement: '.panel-3-module',
-        duration: 450,
-        offset: -200
+        duration: 200,
+        offset: 200
       })
 
       // add your tween to your scene
@@ -279,7 +279,7 @@ define('main', function(require) {
       var scene = new ScrollMagic.Scene({
         triggerElement: '.icon-2',
         duration: 200,
-        offset: 0
+        offset: -100
       })
 
       // add your tween to your scene
@@ -293,9 +293,9 @@ define('main', function(require) {
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
-        triggerElement: '.icon-3',
+        triggerElement: '.icon-2',
         duration: 100,
-        offset: 0
+        offset: 250
       })
 
       // add your tween to your scene
@@ -311,7 +311,7 @@ define('main', function(require) {
       var scene = new ScrollMagic.Scene({
         triggerElement: '.icon-3',
         duration: 300,
-        offset: -250
+        offset: 0
       })
 
       // add your tween to your scene
