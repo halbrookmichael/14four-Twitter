@@ -3,47 +3,46 @@
 
 .panel-3-module {
   background: #26BA66;
-  padding: 20px;
-  .panel-3 {
+  padding: 75px 50px;
+  @media (max-width: 768px) {
+    padding: 75px 0;
+  }
+  .launch {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    span {
-      font-weight: 300;
-    }
-    .download-guide {
-      display: flex;
+    @media (max-width: 768px) {
       flex-direction: column;
-      align-items: center;
-      margin-bottom: 20px;
     }
-    h1 {
-      max-width: 633px;
-      padding-left: 40px;
-      @media (max-width: 780px) {
-        max-width: 65%;
+    .announce {
+      padding-right: 35px;
+      width: 60%;
+      @media (max-width: 768px) {
         text-align: center;
-        padding-left: 0;
-      }
-      @media (max-width: 680px) {
-        max-width: 100%;
+        padding-right: 0;
+        width: 80%;
       }
     }
     img {
-      max-width: 70%;
-      margin: 40px 0;
-      @media (max-width: 780px) {
-        width: 60%;
+      width: 40%;
+      -webkit-box-shadow: 0px 0px 25px 5px rgba(219,216,219,.5);
+      -moz-box-shadow: 0px 0px 25px 5px rgba(219,216,219,.5);
+      box-shadow: 0px 0px 25px 5px rgba(219,216,219,.5);
+      @media (max-width: 768px) {
+        margin-top: 30px;
+        width: 80%;
+      }
+      @media (max-width: 460px) {
+        margin-top: 30px;
+        width: 80%;
       }
     }
-    @media (max-width: 780px) {
-      flex-direction: column;
-      padding: 25px 0;
-    }
   }
-  .download-button {
+  .download-btn {
     background: $white;
-    padding: 8.5px 0;
+    padding: 7.5px 0;
+    margin: 50px auto 0;
+    text-align: center;
+    width: 221px;
     &:hover {
       border: .25px solid #F7B000;
     }

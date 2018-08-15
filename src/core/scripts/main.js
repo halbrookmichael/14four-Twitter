@@ -96,14 +96,14 @@ define('main', function(require) {
       // PANEL 3 ----------
 
       // setup a GSAP Tween, look at TweenMax docs for syntax
-      var tween3 = TweenMax.fromTo('.rotate', 1, {xPercent: 600, rotation: 100}, {xPercent: 0, rotation: 0});
+      var tween3 = TweenMax.fromTo('.rotate', 1, {xPercent: 600, rotation: 400}, {xPercent: 0, rotation: 0});
 
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
         triggerElement: '.panel-3-module',
-        duration: 600,
-        offset: -200
+        duration: 400,
+        offset: 0
       })
 
       // add your tween to your scene
@@ -144,14 +144,14 @@ define('main', function(require) {
       .addTo(controller);
 
       // setup a GSAP Tween, look at TweenMax docs for syntax
-      var tween19 = TweenMax.fromTo('.download-button', 1, {scale: 0}, {scale: 1});
+      var tween19 = TweenMax.fromTo('.download-btn', 1, {yPercent: 250, autoAlpha: 0}, {yPercent: 0, autoAlpha: 1});
 
       // scrollmagic scene, you will have one for each animation(tween), this will define things like the trigger element and
       // other scene parameters
       var scene = new ScrollMagic.Scene({
         triggerElement: '.panel-3-module',
-        duration: 250,
-        offset: 200
+        duration: 450,
+        offset: -200
       })
 
       // add your tween to your scene
