@@ -45,6 +45,7 @@
     "babel-polyfill": "^6.9.0",
     "gsap": "^2.0.1",
     "jquery": "~1.11.1",
+    "npm": "^6.3.0",
     "scrollmagic": "^2.0.5"
   }
 }
