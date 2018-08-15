@@ -102,7 +102,7 @@ define('main', function(require) {
       // other scene parameters
       var scene = new ScrollMagic.Scene({
         triggerElement: '.panel-3-module',
-        duration: 400,
+        duration: 300,
         offset: 0
       })
 
